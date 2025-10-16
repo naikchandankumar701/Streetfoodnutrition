@@ -1,117 +1,20 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Street Food Nutrition</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blog - Street Food Nutrition</title><link rel="stylesheet" href="../css/style.css"></head>
 <body>
-  <nav class="nav">
-    <div class="brand">Street Food Nutrition</div>
-    <div class="navlinks">
-      <a href="index.html">Home</a>
-      <a href="#features">Features</a>
-      <a href="blog/index.html">Blog</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
-
-  <header class="hero">
-    <h1>Street Food Nutrition</h1>
-    <p>Quick street food nutrition calculator & meal builder — accurate-ish values for common Indian street foods.</p>
-  </header>
-
-  <main class="container">
-    <section id="app" class="card">
-      <h2>Nutrition Calculator</h2>
-
-      <div class="row">
-        <div class="col-7">
-          <div class="controls">
-            <input id="search" placeholder="Search foods (e.g. samosa, dosa)" />
-            <select id="filterVeg">
-              <option value="all">All</option><option value="veg">Veg</option><option value="nonveg">Non-Veg</option>
-            </select>
-            <select id="filterCooking">
-              <option value="all">All cooking</option><option value="fried">Fried</option><option value="grilled">Grilled</option><option value="steamed">Steamed</option><option value="assembled">Assembled</option><option value="chilled">Chilled</option>
-            </select>
-            <select id="filterSpice">
-              <option value="all">Any spice</option><option value="spicy">Spicy</option><option value="mild">Mild</option>
-            </select>
-            <select id="region">
-              <option value="All">All regions</option><option value="North">North</option><option value="South">South</option><option value="West">West</option><option value="East">East</option>
-            </select>
-          </div>
-
-          <div id="foodList" class="grid"></div>
-        </div>
-
-        <aside class="col-3 card aside">
-          <h3>Your Plate</h3>
-          <div id="plateList">No items yet — add foods to build a meal.</div>
-          <div class="totals" id="totals"></div>
-          <div class="buttons">
-            <button id="clearPlate">Clear Plate</button>
-            <button id="copyMeal">Copy Meal</button>
-          </div>
-          <hr/>
-          <h4>Profile</h4>
-          <label>Height cm: <input id="height" type="number" value="165" /></label>
-          <label>Weight kg: <input id="weight" type="number" value="65" /></label>
-          <div id="dailyGoal"></div>
-        </aside>
-      </div>
-
-      <hr/>
-      <section id="addCustom" class="smallcard">
-        <h4>Add Custom Food</h4>
-        <input id="customName" placeholder="Name" />
-        <input id="customCalories" type="number" placeholder="Calories" />
-        <input id="customProtein" type="number" placeholder="Protein (g)" />
-        <input id="customFat" type="number" placeholder="Fat (g)" />
-        <input id="customCarbs" type="number" placeholder="Carbs (g)" />
-        <input id="customAllergens" placeholder="Allergens (comma separated)" />
-        <button id="addCustomBtn">Add Food</button>
-      </section>
-
-    </section>
-
-    <section id="features" class="card">
-      <h2>Features</h2>
-      <ul>
-        <li>Search & Filter (veg/non-veg, cooking style, spice, region)</li>
-        <li>Portion size control & Add to Plate (Meal Builder)</li>
-        <li>Daily requirement comparison (based on simple BMI adjustment)</li>
-        <li>Custom food entry, allergen alerts, health warnings, alternatives</li>
-        <li>Blog section with posts (click Blog in navbar)</li>
-      </ul>
-    </section>
-
-    <section id="blogPreview" class="card">
-      <h2>Latest blog posts</h2>
-      <div class="grid" id="blogCards">
-        <article class="card small">
-          <h3><a href="blog/post1.html">Healthy Street Food Choices</a></h3>
-          <p>How to pick smarter options at the stall — tips and swaps.</p>
-        </article>
-        <article class="card small">
-          <h3><a href="blog/post2.html">Portion Control on the Go</a></h3>
-          <p>Simple portion tricks when you're eating out.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="contact" class="card">
-      <h2>Contact</h2>
-      <p>Made for demo. Edit files in /blog/ to add posts.</p>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <small>Street Food Nutrition — demo. Nutrition values are approximate.</small>
-  </footer>
-
-  <script src="js/app.js"></script>
-</body>
-</html>
+<nav class="nav"><div class="brand"><a href="../index.html">Street Food Nutrition</a></div><div class="navlinks"><a href="../index.html">Home</a><a href="../index.html#features">Features</a><a href="index.html">Blog</a></div></nav>
+<main class="container">
+  <h1>Blog</h1>
+  <div class="grid">
+    <article class="card small">
+      <h3><a href="post1.html">Healthy Street Food Choices</a></h3>
+      <p>How to pick smarter options at the stall — tips and swaps.</p>
+    </article>
+    <article class="card small">
+      <h3><a href="post2.html">Portion Control on the Go</a></h3>
+      <p>Simple portion tricks when you're eating out.</p>
+    </article>
+  </div>
+</main>
+<footer class="footer"><small><a href="../index.html">Home</a></small></footer>
+</body></html>
