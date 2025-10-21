@@ -1,15 +1,171 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Healthy Street Food Choices</title><link rel="stylesheet" href="../css/style.css"></head><body>
-<nav class="nav"><div class="brand"><a href="../index.html">Street Food Nutrition</a></div><div class="navlinks"><a href="../index.html">Home</a><a href="../index.html#features">Features</a><a href="index.html">Blog</a></div></nav>
-<main class="container card"><article><h1>Healthy Street Food Choices</h1>
-<p>Street food is delicious and part of culture. Here are practical tips to choose healthier options at stalls:</p>
-<ul>
-<li>Prefer steamed or grilled items (momos, kebabs) over deep-fried ones.</li>
-<li>Choose smaller portions — try 1 piece instead of 3.</li>
-<li>Add a side of salad or buttermilk for balance.</li>
-<li>Look for vendors who use less oil and fresher ingredients.</li>
-</ul>
-<p>This blog is a demo. Use the built-in calculator to compare calories and build balanced plates.</p>
-</article></main>
-<footer class="footer"><small><a href="index.html">Back to Blog</a> • <a href="../index.html">Home</a></small></footer>
-</body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Calculator — Street Food Nutrition</title>
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f0ef;
+    padding: 16px;
+  }
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 12px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    z-index: 1000;
+  }
+  nav a {
+    text-decoration: none;
+    color: #222;
+    font-weight: 600;
+  }
+  .container {
+    max-width: 900px;
+    margin: 96px auto 40px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .06);
+  }
+  .card {
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    background: #fafafa;
+  }
+  .row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  input, select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+  button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    background: #0a84ff;
+    color: #fff;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="post1.html">🍔 Calculator</a>
+  <a href="post2.html">📝 Blog</a>
+  <a href="about.html">ℹ️ About</a>
+</nav>
+
+<div class="container">
+  <h1>Street Food Nutrition Calculator</h1>
+  <p>Choose items and click “Add” to build a plate — see total calories, protein, fat, and carbs.</p>
+
+  <div class="card">
+    <div class="row">
+      <select id="foodSelect"></select>
+      <input id="qty" type="number" min="1" value="1" style="width:80px" />
+      <button id="addBtn">Add to plate</button>
+    </div>
+  </div>
+
+  <div id="plate" class="card"></div>
+
+  <div class="card">
+    <strong>Totals:</strong>
+    <div id="totals">Calories: 0 kcal — Protein: 0 g — Fat: 0 g — Carbs: 0 g</div>
+  </div>
+</div>
+
+<script>
+// Sample street food data
+const SAMPLE_FOODS = [
+  {id:1,name:"Samosa",calories:260,protein:3,fat:15,carbs:28},
+  {id:2,name:"Momos (6 pcs)",calories:300,protein:10,fat:8,carbs:35},
+  {id:3,name:"Grilled Kebab",calories:200,protein:22,fat:11,carbs:6},
+  {id:4,name:"Pav Bhaji (1 plate)",calories:400,protein:8,fat:18,carbs:50},
+  {id:5,name:"Vada Pav",calories:330,protein:7,fat:14,carbs:42},
+  {id:6,name:"Bhel Puri",calories:250,protein:6,fat:9,carbs:35},
+  {id:7,name:"Chole Bhature",calories:450,protein:12,fat:18,carbs:55},
+  {id:8,name:"Idli (2 pcs)",calories:120,protein:4,fat:1,carbs:25},
+  {id:9,name:"Paneer Roll",calories:380,protein:14,fat:16,carbs:40}
+];
+
+const foodSelect = document.getElementById('foodSelect');
+SAMPLE_FOODS.forEach(f => {
+  const opt = document.createElement('option');
+  opt.value = f.id;
+  opt.textContent = f.name;
+  foodSelect.appendChild(opt);
+});
+
+let plate = [];
+
+function renderPlate() {
+  const plateEl = document.getElementById('plate');
+  plateEl.innerHTML = '';
+  if (plate.length === 0) {
+    plateEl.textContent = 'No items added yet.';
+    return;
+  }
+  plate.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.style.display = 'flex';
+    div.style.justifyContent = 'space-between';
+    div.style.marginBottom = '6px';
+    div.innerHTML = `<div>${p.name} × ${p.qty}</div><div>${(p.calories * p.qty).toFixed(0)} kcal</div>`;
+    const rem = document.createElement('button');
+    rem.textContent = 'Remove';
+    rem.style.marginLeft = '8px';
+    rem.onclick = () => {
+      plate.splice(i, 1);
+      renderPlate();
+      computeTotals();
+    };
+    div.appendChild(rem);
+    plateEl.appendChild(div);
+  });
+}
+
+function computeTotals() {
+  const totalsEl = document.getElementById('totals');
+  const totals = plate.reduce(
+    (acc, p) => {
+      acc.cal += p.calories * p.qty;
+      acc.pro += p.protein * p.qty;
+      acc.fat += p.fat * p.qty;
+      acc.carb += p.carbs * p.qty;
+      return acc;
+    },
+    { cal: 0, pro: 0, fat: 0, carb: 0 }
+  );
+  totalsEl.textContent = `Calories: ${totals.cal.toFixed(0)} kcal — Protein: ${totals.pro.toFixed(0)} g — Fat: ${totals.fat.toFixed(0)} g — Carbs: ${totals.carb.toFixed(0)} g`;
+}
+
+document.getElementById('addBtn').onclick = () => {
+  const id = Number(foodSelect.value);
+  const qty = Math.max(1, Number(document.getElementById('qty').value || 1));
+  const food = SAMPLE_FOODS.find(f => f.id === id);
+  if (!food) return;
+  plate.push({ ...food, qty });
+  renderPlate();
+  computeTotals();
+};
+</script>
+
+</body>
+</html>
