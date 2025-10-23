@@ -1,63 +1,37 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Street Food Nutrition</title>
-
-  <!-- If you already have style.css in the repo, this will use it -->
-  <link rel="stylesheet" href="style.css">
-
-  <style>
-    /* Small safety styles so nav looks ok if your style.css is missing */
-    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f4f0ef; color:#222; }
-    nav { position:fixed; top:0; left:0; width:100%; background:#fff; border-bottom:1px solid #ddd; box-shadow:0 2px 5px rgba(0,0,0,0.03); text-align:center; padding:10px 6px; z-index:1000; }
-    nav a { margin:0 12px; text-decoration:none; color:#222; font-weight:600; }
-    nav a:hover { color:#ff6600; }
-    .container { margin-top:84px; max-width:820px; padding:20px; margin-left:auto; margin-right:auto; background:#fff; border-radius:12px; box-shadow:0 6px 14px rgba(0,0,0,0.06); }
-    footer { text-align:center; padding:18px 8px; color:#666; margin-top:18px; }
-    .lead { font-size:18px; line-height:1.6; margin: 12px 0 18px; color:#333; }
-    ul { margin-left:20px; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Street Food Nutrition Calculator</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <!-- Navbar -->
   <nav>
     <a href="index.html">🏠 Home</a>
-    <!-- Calculator link points to the calculator page (post1.html). 
-         If your calculator page file name is different, change this href -->
     <a href="post1.html">🍔 Calculator</a>
     <a href="post2.html">📝 Blog</a>
     <a href="about.html">ℹ️ About</a>
   </nav>
 
-  <!-- Main content area -->
-  <main class="container" role="main">
-    <h1>Healthy Street Food Choices</h1>
+  <div class="container">
+    <h1>Street Food Nutrition Calculator</h1>
+    <p>Choose items and click “Add” to build a plate — see total calories, protein, fat, and carbs.</p>
 
-    <p class="lead">
-      Street food is delicious and part of culture. Here are practical tips to choose healthier options at stalls:
-    </p>
+    <div class="row">
+      <select id="search"></select>
+      <input id="qty" type="number" value="1" min="1" max="10" />
+      <button onclick="addToPlate()">Add to plate</button>
+    </div>
 
-    <ul>
-      <li>Prefer steamed or grilled items (momos, kebabs) over deep-fried ones.</li>
-      <li>Choose smaller portions — try 1 piece instead of 3.</li>
-      <li>Add a side of salad or buttermilk for balance.</li>
-      <li>Look for vendors who use less oil and fresher ingredients.</li>
-    </ul>
+    <div id="plateList"></div>
+    <div id="totals"></div>
+  </div>
 
-    <p class="lead">
-      Use the <strong>Calculator</strong> link above to open the nutrition calculator. Use the <strong>Blog</strong> link for posts and the <strong>About</strong> link for info.
-    </p>
+  <footer>
+    <p>© 2025 Street Food Nutrition | Built with ❤️ for better eating</p>
+  </footer>
 
-    <footer>
-      © 2025 Street Food Nutrition | <a href="https://streetfoodnutrition.netlify.app" target="_blank" rel="noopener">Back to Top</a>
-    </footer>
-  </main>
-
-  <!-- We don't include app.js here because the calculator lives on its own page (post1.html).
-       If you want the calculator embedded on this home page, tell me and I'll give code to include it here. -->
+  <script src="app.js"></script>
 </body>
 </html>
