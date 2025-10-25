@@ -1,0 +1,103 @@
+{
+  "foods": [
+    {
+      "name": "Masala Dosa",
+      "description": "Crispy rice crepe filled with spiced potato masala.",
+      "category": "veg",
+      "calories": 220,
+      "price": "₹70",
+      "ingredients": ["Rice", "Urad dal", "Potato"],
+      "image": "/uploads/masala_dosa.jpg",
+      "tags": ["south indian"],
+      "published": true
+    },
+    {
+      "name": "Pav Bhaji",
+      "description": "Spiced mashed vegetables served with buttered pav.",
+      "category": "veg",
+      "calories": 350,
+      "price": "₹80",
+      "ingredients": ["Potato", "Tomato", "Peas"],
+      "image": "/uploads/pav_bhaji.jpg",
+      "tags": ["maharashtra"],
+      "published": true
+    },
+    {
+      "name": "Vada Pav",
+      "description": "Mumbai's famous spicy potato fritter in a bun.",
+      "category": "veg",
+      "calories": 350,
+      "price": "₹50",
+      "ingredients": ["Potato", "Bread", "Chutney"],
+      "image": "/uploads/vada_pav.jpg",
+      "tags": ["mumbai"],
+      "published": true
+    },
+    {
+      "name": "Chicken Kebab Roll",
+      "description": "Marinated grilled chicken wrapped in a roll with onions and chutney.",
+      "category": "nonveg",
+      "calories": 420,
+      "price": "₹150",
+      "ingredients": ["Chicken", "Spices", "Paratha"],
+      "image": "/uploads/chicken_kebab_roll.jpg",
+      "tags": ["kebab"],
+      "published": true
+    },
+    {
+      "name": "Biryani (Chicken)",
+      "description": "Layered rice with marinated chicken and aromatic spices.",
+      "category": "nonveg",
+      "calories": 650,
+      "price": "₹180",
+      "ingredients": ["Rice", "Chicken", "Spices"],
+      "image": "/uploads/chicken_biryani.jpg",
+      "tags": ["hyderabadi"],
+      "published": true
+    },
+    {
+      "name": "Jalebi",
+      "description": "Deep-fried spirals soaked in saffron sugar syrup.",
+      "category": "sweet",
+      "calories": 360,
+      "price": "₹60",
+      "ingredients": ["Maida", "Sugar"],
+      "image": "/uploads/jalebi.jpg",
+      "tags": ["dessert"],
+      "published": true
+    },
+    {
+      "name": "Gulab Jamun",
+      "description": "Milk-solid dumplings soaked in rose sugar syrup.",
+      "category": "sweet",
+      "calories": 300,
+      "price": "₹80",
+      "ingredients": ["Khoya", "Sugar"],
+      "image": "/uploads/gulab_jamun.jpg",
+      "tags": ["dessert"],
+      "published": true
+    },
+    {
+      "name": "Masala Chai",
+      "description": "Spiced Indian tea brewed with milk and masala.",
+      "category": "drink",
+      "calories": 120,
+      "price": "₹20",
+      "ingredients": ["Tea", "Milk", "Spices"],
+      "image": "/uploads/masala_chai.jpg",
+      "tags": ["tea"],
+      "published": true
+    },
+    {
+      "name": "Sugarcane Juice",
+      "description": "Fresh pressed sugarcane juice served with lemon and ginger.",
+      "category": "drink",
+      "calories": 120,
+      "price": "₹40",
+      "ingredients": ["Sugarcane", "Lemon"],
+      "image": "/uploads/sugarcane_juice.jpg",
+      "tags": ["fresh"],
+      "published": true
+    }
+  ]
+}
