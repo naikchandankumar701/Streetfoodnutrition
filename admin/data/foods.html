@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Street Food — Foods (with Add)</title>
+  <style>
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin:16px; background:#fff;}
+    .container{max-width:1100px; margin:0 auto;}
+    .grid{display:grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap:16px; margin-top:16px;}
+    .card{border:1px solid #eee; border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.03); background:#fff;}
+    .card img{width:100%; height:160px; object-fit:cover; border-radius:8px; display:block; margin-bottom:8px;}
+    .meta{font-size:14px;color:#666;margin-bottom:8px;}
+    .title{font-weight:600;margin:6px 0;}
+    .tags{margin-top:8px;}
+    .tag{display:inline-block; font-size:12px; background:#f1f1f1; padding:4px 8px; border-radius:999px; margin-right:6px;}
+    .form-row{display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap;}
+    .form-row input, .form-row select, .form-row textarea{padding:8px; border-radius:6px; border:1px solid #ddd; flex:1;}
+    .btn{padding:8px 12px; border-radius:8px; border:0; background:#0b74de; color:white; cursor:pointer;}
+    .small{font-size:13px; color:#555;}
+    .download-area{margin-top:12px; display:flex; gap:8px; align-items:center;}
+    .notice{background:#fffbdd;border:1px solid #ffe8a8;padding:8px;border-radius:6px;margin-top:8px;}
+  </style>
+</head>
+<body>
+  <div class="container">
+  <h1 style="text-align:center">Street Food (Add Food)</h1>
+
+  <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
+    <div style="flex:1; min-width:320px;">
+      <h3>Add new food</h3>
+      <div id="add-form">
+        <div class="form-row"><input id="f-name" placeholder="Name" /></div>
+        <div class="form-row"><input id="f-category" placeholder="Category (veg / nonveg / sweet / drink)" /></div>
+        <div class="form-row"><input id="f-calories" placeholder="Calories (kcal)" type="number" /></div>
+        <div class="form-row"><input id="f-price" placeholder="Price (eg ₹80)" /></div>
+        <div class="form-row"><textarea id="f-desc" placeholder="Short description" rows="3"></textarea></div>
+        <div class="form-row"><input id="f-ingredients" placeholder="Ingredients (comma separated)" /></div>
+        <div class="form-row"><input id="f-tags" placeholder="Tags (comma separated)" /></div>
+        <div class="form-row"><input id="f-image" placeholder="Image URL (optional)" /></div>
+        <div style="margin-top:8px;">
+          <button id="add-btn" class="btn">Add to list (local)</button>
+          <button id="download-btn" class="btn" style="background:#2f9e44;">Download JSON</button>
+          <button id="copy-btn" class="btn" style="background:#6c757d;">Copy JSON</button>
+        </div>
+        <div class="notice small">This form updates locally and lets you download or copy updated <code>data/foods.json</code>. It doesn’t auto-commit to GitHub.</div>
+      </div>
+    </div>
+
+    <div style="flex:1; min-width:320px;">
+      <h3>Current foods</h3>
+      <div class="small">Filter: 
+        <select id="filter-cat"><option value="">All</option><option>veg</option><option>nonveg</option><option>sweet</option><option>drink</option></select>
+        <button id="clear-filter" class="btn" style="background:#777;margin-left:8px;">Clear</button>
+      </div>
+      <div id="food-list" class="grid"></div>
+      <div id="no-foods" class="small" style="display:none">No foods found.</div>
+    </div>
+  </div>
+
+<script>
+let foods = [];
+
+async function loadInitial() {
+  try {
+    const resp = await fetch('/data/foods.json', {cache: "no-store"});
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const json = await resp.json();
+    foods = json.foods || [];
+    renderFoods();
+  } catch (err) {
+    foods = [];
+    renderFoods();
+  }
+}
+
+function renderFoods() {
+  const container = document.getElementById('food-list');
+  container.innerHTML = '';
+  const filter = document.getElementById('filter-cat').value.trim().toLowerCase();
+  const list = foods.filter(f => f.published !== false && (!filter || (f.category || '').toLowerCase() === filter));
+  if (!list.length) {
+    document.getElementById('no-foods').style.display = 'block';
+    return;
+  } else document.getElementById('no-foods').style.display = 'none';
+  for (const f of list) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    const imgHtml = f.image ? `<img src="${f.image}" alt="${f.name}" loading="lazy">` : '';
+    const ingredients = Array.isArray(f.ingredients) ? f.ingredients.join(', ') : '';
+    const tagsHtml = (f.tags || []).map(t => `<span class='tag'>${t}</span>`).join(' ');
+    card.innerHTML = `
+      ${imgHtml}
+      <div class='title'>${f.name}</div>
+      <div class='meta'>${f.category?.toUpperCase() || ''} • ${f.calories || ''} kcal • ${f.price || ''}</div>
+      <div>${f.description || ''}</div>
+      <div style='margin-top:8px;font-size:13px;color:#444'><strong>Ingredients:</strong> ${ingredients}</div>
+      <div class='tags'>${tagsHtml}</div>`;
+    container.appendChild(card);
+  }
+}
+
+document.getElementById('add-btn').addEventListener('click', () => {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) return alert('Enter a name');
+  const newItem = {
+    name,
+    category: document.getElementById('f-category').value.trim() || 'veg',
+    calories: parseInt(document.getElementById('f-calories').value) || null,
+    price: document.getElementById('f-price').value.trim() || '',
+    description: document.getElementById('f-desc').value.trim(),
+    ingredients: document.getElementById('f-ingredients').value.split(',').map(s=>s.trim()).filter(Boolean),
+    tags: document.getElementById('f-tags').value.split(',').map(s=>s.trim()).filter(Boolean),
+    image: document.getElementById('f-image').value.trim(),
+    published: true
+  };
+  foods.push(newItem);
+  renderFoods();
+  alert('Added locally! Download JSON to save.');
+});
+
+document.getElementById('download-btn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify({foods}, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'data_foods.json'; a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('copy-btn').addEventListener('click', async () => {
+  await navigator.clipboard.writeText(JSON.stringify({foods}, null, 2));
+  alert('Copied JSON to clipboard');
+});
+
+document.getElementById('filter-cat').addEventListener('change', renderFoods);
+document.getElementById('clear-filter').addEventListener('click', () => { document.getElementById('filter-cat').value=''; renderFoods(); });
+
+loadInitial();
+</script>
+</body>
+</html>
