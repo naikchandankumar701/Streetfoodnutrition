@@ -1,0 +1,28 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "static/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "foods"
+    label: "Foods"
+    files:
+      - file: "data/foods.json"
+        label: "Foods JSON"
+        name: "foods_json"
+        fields:
+          - { label: "Foods list", name: "foods", widget: "list", field:
+              { label: "Food item", name: "item", widget: "object", fields:
+                - { label: "Name", name: "name", widget: "string" }
+                - { label: "Description", name: "description", widget: "text", required: false }
+                - { label: "Category", name: "category", widget: "string", required: false }
+                - { label: "Calories (kcal)", name: "calories", widget: "number", required: false }
+                - { label: "Price", name: "price", widget: "string", required: false }
+                - { label: "Ingredients", name: "ingredients", widget: "list", required: false }
+                - { label: "Image", name: "image", widget: "image", required: false }
+                - { label: "Tags", name: "tags", widget: "list", required: false }
+                - { label: "Published", name: "published", widget: "boolean", default: true }
+              }
+            }
